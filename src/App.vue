@@ -1,21 +1,24 @@
 <template>
     <div id="app">
         <DataTable :list="list"/>
+        <CountryGrid :list="list"/>
     </div>
 </template>
 
 <script>
-    import DataTable from './components/DataTable.vue'
     import Vue from 'vue';
     import axios from 'axios';
     import VueAxios from 'vue-axios';
+    import DataTable from "@/components/DataTable";
+    import CountryGrid from "@/components/CountryGrid";
 
     Vue.use(VueAxios, axios);
 
     export default {
         name: 'App',
         components: {
-            DataTable
+            DataTable,
+            CountryGrid
         },
         data() {
             return {list: undefined}
