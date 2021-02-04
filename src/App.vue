@@ -33,7 +33,6 @@
         mounted() {
             Vue.axios.get('https://disease.sh/v3/covid-19/countries')
                 .then((response) => {
-                    console.log(response);
                     this.list = dataTableService(response.data);
                 })
                 .catch((error) => {
