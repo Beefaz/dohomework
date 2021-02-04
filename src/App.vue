@@ -1,8 +1,6 @@
 <template>
     <div id="app">
-        <DataTable2 :list2="list2"/>
         <DataTable :list="list"/>
-        <CountryGrid :list="list"/>
     </div>
 </template>
 
@@ -15,8 +13,6 @@
     import 'vue-good-table/dist/vue-good-table.css'
 
     //components
-    import DataTable2 from "@/components/DataTable2";
-    import CountryGrid from "@/components/CountryGrid";
     import DataTable from "@/components/DataTable";
 
     //scripts
@@ -29,20 +25,16 @@
     export default {
         name: 'App',
         components: {
-            DataTable2,
             DataTable,
-            CountryGrid
         },
         data() {
-            return {list: undefined, list2:undefined}
+            return {list: undefined}
         },
-
         mounted() {
             Vue.axios.get('https://disease.sh/v3/covid-19/countries')
                 .then((response) => {
-                    this.list = response.data;
-                    this.list2 = dataTableService(response.data);
-                    console.log(dataTableService(response.data));
+                    console.log(response);
+                    this.list = dataTableService(response.data);
                 })
                 .catch((error) => {
                     console.warn(error);
