@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <LatestDiseaseStatsSection :latest-disease-stats="latestDiseaseStats"/>
         <DataTable :list="list"/>
     </div>
 </template>
@@ -13,10 +14,12 @@
     import 'vue-good-table/dist/vue-good-table.css'
 
     //components
+    import LatestDiseaseStatsSection from "@/components/LatestDiseaseStatsSection";
     import DataTable from "@/components/DataTable";
 
     //scripts
-    import {dataTableService} from "@/services/dataTableService";
+    import {dataTableAdapter} from "@/functions/dataTableAdapter";
+    import {latestDataAdapter} from "@/functions/latestDataAdapter";
 
     //use
     Vue.use(VueGoodTablePlugin);
@@ -26,14 +29,22 @@
         name: 'App',
         components: {
             DataTable,
+            LatestDiseaseStatsSection,
         },
         data() {
-            return {list: undefined}
+            return {list: undefined, latestDiseaseStats: undefined}
         },
         mounted() {
+            Vue.axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=10')
+                .then((response) => {
+                    this.latestDiseaseStats = latestDataAdapter(response.data);
+                })
+                .catch((error) => {
+                    console.warn(error);
+                });
             Vue.axios.get('https://disease.sh/v3/covid-19/countries')
                 .then((response) => {
-                    this.list = dataTableService(response.data);
+                    this.list = dataTableAdapter(response.data);
                 })
                 .catch((error) => {
                     console.warn(error);
