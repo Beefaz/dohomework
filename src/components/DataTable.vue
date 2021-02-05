@@ -8,7 +8,19 @@
     enabled: true,
     skipDiacritics: true,
     placeholder: 'Search this table',
-    }"/>
+    }">
+        <template slot="table-row" slot-scope="props">
+            <span v-if="props.column.field === 'country'">
+                                    <a :href="'/'+props.formattedRow[props.column.field]">{{props.formattedRow[props.column.field]}}</a>
+                                </span>
+            <!--span v-if="props.column.label === 'country'">
+                 <a href="#">{{props.rows.country[props.column.label]}}</a>
+            </span-->
+    </template>
+    </vue-good-table>
+    <div v-else>
+        Sorry. No data available. Try later or refresh your page.
+    </div>
 </template>
 
 
@@ -33,10 +45,12 @@
                 allLabel: 'All',
             };
             return {paginationOptions: tablePagOpt}
+        },
+        mounted(){
+            console.table(this.list);
         }
     };
 </script>
-
 <style scoped>
 </style>
 
