@@ -4,7 +4,6 @@ export const dataTableAdapter = (dataObj) => {
         delete dataObj[key]['continent'];
         delete dataObj[key]['updated'];
     });
-      console.log(Object.values(dataObj));
     return {
         columns: createHeaders(dataObj[0]),
         rows: Object.values(dataObj)
