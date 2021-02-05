@@ -13,7 +13,7 @@
             <span v-if="props.column.field === 'country'">
                                     <a :href="'/'+props.formattedRow[props.column.field]">{{props.formattedRow[props.column.field]}}</a>
                                 </span>
-    </template>
+        </template>
     </vue-good-table>
     <div v-else>
         Sorry. No data available. Try later or refresh your page.
@@ -43,7 +43,7 @@
             };
             return {paginationOptions: tablePagOpt}
         },
-        mounted(){
+        mounted() {
             console.table(this.list);
         }
     };
