@@ -43,9 +43,6 @@
             };
             return {paginationOptions: tablePagOpt}
         },
-        mounted() {
-            console.table(this.list);
-        }
     };
 </script>
 <style scoped>
