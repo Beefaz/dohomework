@@ -13,9 +13,6 @@
             <span v-if="props.column.field === 'country'">
                                     <a :href="'/'+props.formattedRow[props.column.field]">{{props.formattedRow[props.column.field]}}</a>
                                 </span>
-            <!--span v-if="props.column.label === 'country'">
-                 <a href="#">{{props.rows.country[props.column.label]}}</a>
-            </span-->
     </template>
     </vue-good-table>
     <div v-else>
