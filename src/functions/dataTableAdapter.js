@@ -12,8 +12,8 @@ export const dataTableAdapter = (dataObj) => {
 
 const createHeaders = (headerObj) => {
     return Object.keys(headerObj).map((col) => {
-       // const upperCaseCol = col.replace(/([A-Z]+)/g, " $1").toUpperCase(); headeriams keisti, reikes mest i fronta, pjaunasi
-        const params = {label: col, field: col};
+        const upperCaseCol = col.replace(/([A-Z]+)/g, " $1").toUpperCase();
+        const params = {label: upperCaseCol, field: col};
         if (col === 'country') {
             return {type: 'string', ...params}
         } else

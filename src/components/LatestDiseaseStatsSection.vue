@@ -9,7 +9,7 @@
             <h2>Recovered: {{latestDiseaseStats.recovered}}</h2>
         </div>
         <div v-else>
-            Sorry. No data available. Try later or refresh your page.
+            Sorry, no data available. Refresh your page or try again later.
         </div>
     </section>
 </template>

@@ -16,7 +16,7 @@
         </template>
     </vue-good-table>
     <div v-else>
-        Sorry. No data available. Try later or refresh your page.
+        Sorry, no data available yet. Refresh your page or try again later.
     </div>
 </template>
 

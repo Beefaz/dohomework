@@ -34,15 +34,15 @@
         data() {
             return {list: undefined, latestDiseaseStats: undefined}
         },
-        mounted() {
-            Vue.axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=10')
+        async mounted() {
+            await Vue.axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=10')
                 .then((response) => {
                     this.latestDiseaseStats = latestDataAdapter(response.data);
                 })
                 .catch((error) => {
                     console.warn(error);
                 });
-            Vue.axios.get('https://disease.sh/v3/covid-19/countries')
+            await Vue.axios.get('https://disease.sh/v3/covid-19/countries')
                 .then((response) => {
                     this.list = dataTableAdapter(response.data);
                 })
