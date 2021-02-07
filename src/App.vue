@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-        <LatestDiseaseStatsSection :latest-disease-stats="latestDiseaseStats"/>
-        <DataTable :list="list"/>
+        <LatestDiseaseStatsSection/>
+        <DataTable/>
     </div>
 </template>
 
@@ -18,8 +18,6 @@
     import DataTable from "@/components/DataTable";
 
     //scripts
-    import {dataTableAdapter} from "@/functions/dataTableAdapter";
-    import {latestDataAdapter} from "@/functions/latestDataAdapter";
 
     //use
     Vue.use(VueGoodTablePlugin);
@@ -31,25 +29,6 @@
             DataTable,
             LatestDiseaseStatsSection,
         },
-        data() {
-            return {list: undefined, latestDiseaseStats: undefined}
-        },
-        async mounted() {
-            await Vue.axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=10')
-                .then((response) => {
-                    this.latestDiseaseStats = latestDataAdapter(response.data);
-                })
-                .catch((error) => {
-                    console.warn(error);
-                });
-            await Vue.axios.get('https://disease.sh/v3/covid-19/countries')
-                .then((response) => {
-                    this.list = dataTableAdapter(response.data);
-                })
-                .catch((error) => {
-                    console.warn(error);
-                })
-        }
     }
 </script>
 

@@ -9,16 +9,32 @@
             <h2>Recovered: {{latestDiseaseStats.recovered}}</h2>
         </div>
         <div v-else>
-            Sorry, no data available. Refresh your page or try again later.
+            Loading...
         </div>
     </section>
 </template>
 
 
 <script>
+    import Vue from 'vue';
+    import {latestDataAdapter} from "@/functions/latestDataAdapter";
+
     export default {
         name: 'LatestDiseaseStatsSection',
-        props: ['latestDiseaseStats', 'list'],
+
+        data() {
+            return {latestDiseaseStats: undefined}
+        },
+        created() {
+            Vue.axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=10')
+                .then((response) => {
+                    this.latestDiseaseStats = latestDataAdapter(response.data);
+                })
+                .catch((error) => {
+                    console.warn(error);
+                });
+
+        }
     };
 </script>
 

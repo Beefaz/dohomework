@@ -1,8 +1,8 @@
 export const dataTableAdapter = (dataObj) => {
     Object.keys(dataObj).forEach((key) => {
-        delete dataObj[key]['countryInfo'];
-        delete dataObj[key]['continent'];
-        delete dataObj[key]['updated'];
+        ['countryInfo', 'continent', 'updated'].forEach((keyName)=> {
+            delete dataObj[key][keyName];
+        });
     });
     return {
         columns: createHeaders(dataObj[0]),
