@@ -1,6 +1,6 @@
 <template>
     <div v-if="countryStats!==undefined">
-        <button class="update" v-on:click=fetchData>Update data</button>
+        <div><button class="update" v-on:click=fetchData>Update data</button></div>
         <img v-bind:src='countryFlag' alt="">
             <div v-for="item in Object.entries(countryStats)" :key="item.index">
                 <div v-if="item[0]!=='countryInfo'">{{item[0]}}: {{item[1]}}</div>
