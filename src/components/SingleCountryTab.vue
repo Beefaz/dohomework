@@ -1,10 +1,15 @@
 <template>
     <div v-if="countryStats!==undefined">
-        <div><button class="update" v-on:click=fetchData>Update data</button></div>
+        <div>
+            <button v-on:click=fetchData>
+                <span v-if="btnUpdated===undefined">Update data</span>
+                <span v-else>Updated!</span>
+            </button>
+        </div>
         <img v-bind:src='countryFlag' alt="">
-            <div v-for="item in Object.entries(countryStats)" :key="item.index">
-                <div v-if="item[0]!=='countryInfo'">{{item[0]}}: {{item[1]}}</div>
-            </div>
+        <div v-for="item in Object.entries(countryStats)" :key="item.index">
+            <div v-if="item[0]!=='countryInfo'">{{item[0]}}: {{item[1]}}</div>
+        </div>
     </div>
 </template>
 
@@ -21,8 +26,8 @@
     export default {
         name: 'SingleCountryTab',
         props: ['country'],
-        data(){
-            return {countryStats: undefined, countryFlag: undefined}
+        data() {
+            return {countryStats: undefined, countryFlag: undefined, btnUpdated: undefined}
         },
         created() {
             if (localStorage.getItem(this.country)) {
@@ -33,10 +38,11 @@
                 }
             } else this.fetchData();
         },
-        methods:{
-            fetchData(){
+        methods: {
+            fetchData() {
                 Vue.axios.get('https://disease.sh/v3/covid-19/countries/' + this.country + '?strict=true')
                     .then((response) => {
+                        this.btnUpdated = true;
                         [this.countryStats, this.countryFlag] = [response.data, response.data['countryInfo']['flag']];
                         localStorage.removeItem(this.country);
                         localStorage.setItem(this.country, JSON.stringify([this.countryStats, this.countryFlag]));
@@ -50,8 +56,5 @@
 </script>
 
 <style scoped>
-    button {
-        margin: 10px;
-    }
 </style>
 

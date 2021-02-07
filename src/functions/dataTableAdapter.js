@@ -1,6 +1,6 @@
 export const dataTableAdapter = (dataObj) => {
     Object.keys(dataObj).forEach((key) => {
-        ['countryInfo', 'continent', 'updated'].forEach((keyName)=> {
+        ['countryInfo', 'continent', 'updated'].forEach((keyName) => {
             delete dataObj[key][keyName];
         });
     });

@@ -16,7 +16,10 @@
                         placeholder: 'Search this table',
                         }">
                 <div slot="table-actions">
-                    <button class="update" v-on:click=fetchData>Update data</button>
+                    <button class="update" v-on:click=fetchData>
+                        <span v-if="btnUpdated===undefined">Update data</span>
+                        <span v-else>Updated!</span>
+                    </button>
                 </div>
                 <div slot="emptystate">
                     No data
@@ -57,7 +60,12 @@
                 pageLabel: 'page',
                 allLabel: 'All',
             };
-            return {paginationOptions: tablePagOpt, list: {columns: [], rows: []}, country: undefined}
+            return {
+                paginationOptions: tablePagOpt,
+                list: {columns: [], rows: []},
+                country: undefined,
+                btnUpdated: undefined
+            }
         },
         created() {
             if (localStorage.getItem('allData')) {
@@ -72,6 +80,7 @@
             fetchData() {
                 Vue.axios.get('https://disease.sh/v3/covid-19/countries')
                     .then((response) => {
+                        this.btnUpdated = true;
                         this.list = dataTableAdapter(response.data);
                         localStorage.removeItem('allData');
                         localStorage.setItem('allData', JSON.stringify(this.list));
