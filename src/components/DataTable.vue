@@ -11,10 +11,13 @@
                     :line-numbers="true"
                     :pagination-options="paginationOptions"
                     :search-options="{
-    enabled: true,
-    skipDiacritics: true,
-    placeholder: 'Search this table',
-    }">
+                        enabled: true,
+                        skipDiacritics: true,
+                        placeholder: 'Search this table',
+                        }">
+                <div slot="table-actions">
+                    <button class="update" v-on:click=fetchData>Update data</button>
+                </div>
                 <div slot="emptystate">
                     No data
                 </div>
@@ -57,14 +60,27 @@
             return {paginationOptions: tablePagOpt, list: {columns: [], rows: []}, country: undefined}
         },
         created() {
-            Vue.axios.get('https://disease.sh/v3/covid-19/countries')
-                .then((response) => {
-                    this.list = dataTableAdapter(response.data);
-                })
-                .catch((error) => {
-                    console.warn(error);
-                })
-        }
+            if (localStorage.getItem('allData')) {
+                try {
+                    this.list = JSON.parse(localStorage.getItem('allData'));
+                } catch (e) {
+                    console.log(e);
+                }
+            } else this.fetchData();
+        },
+        methods: {
+            fetchData() {
+                Vue.axios.get('https://disease.sh/v3/covid-19/countries')
+                    .then((response) => {
+                        this.list = dataTableAdapter(response.data);
+                        localStorage.removeItem('allData');
+                        localStorage.setItem('allData', JSON.stringify(this.list));
+                    })
+                    .catch((error) => {
+                        console.warn(error);
+                    });
+            }
+        },
     };
 </script>
 <style scoped>

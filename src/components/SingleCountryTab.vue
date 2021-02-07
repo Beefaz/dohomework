@@ -1,6 +1,7 @@
 <template>
     <div v-if="countryStats!==undefined">
-        <img v-bind:src=countryFlag alt="">
+        <button class="update" v-on:click=fetchData>Update data</button>
+        <img v-bind:src='countryFlag' alt="">
             <div v-for="item in Object.entries(countryStats)" :key="item.index">
                 <div v-if="item[0]!=='countryInfo'">{{item[0]}}: {{item[1]}}</div>
             </div>
@@ -20,20 +21,31 @@
     export default {
         name: 'SingleCountryTab',
         props: ['country'],
-        data() {
+        data(){
             return {countryStats: undefined, countryFlag: undefined}
         },
         created() {
-            Vue.axios.get('https://disease.sh/v3/covid-19/countries/' + this.country + '?strict=true')
-                .then((response) => {
-                    this.countryFlag = response.data['countryInfo']['flag'];
-                    this.countryStats = response.data;
-                })
-                .catch((error) => {
-                    console.warn(error);
-                });
-
-        }
+            if (localStorage.getItem(this.country)) {
+                try {
+                    [this.countryStats, this.countryFlag] = JSON.parse(localStorage.getItem(this.country));
+                } catch (e) {
+                    console.log(e);
+                }
+            } else this.fetchData();
+        },
+        methods:{
+            fetchData(){
+                Vue.axios.get('https://disease.sh/v3/covid-19/countries/' + this.country + '?strict=true')
+                    .then((response) => {
+                        [this.countryStats, this.countryFlag] = [response.data, response.data['countryInfo']['flag']];
+                        localStorage.removeItem(this.country);
+                        localStorage.setItem(this.country, JSON.stringify([this.countryStats, this.countryFlag]));
+                    })
+                    .catch((error) => {
+                        console.warn(error);
+                    });
+            }
+        },
     }
 </script>
 
