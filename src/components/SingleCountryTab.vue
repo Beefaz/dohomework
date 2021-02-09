@@ -29,7 +29,7 @@
         data() {
             return {countryStats: undefined, countryFlag: undefined, btnUpdated: undefined}
         },
-        updated() {
+        mounted() {
             if (localStorage.getItem(this.country)) {
                 try {
                     [this.countryStats, this.countryFlag] = JSON.parse(localStorage.getItem(this.country));
