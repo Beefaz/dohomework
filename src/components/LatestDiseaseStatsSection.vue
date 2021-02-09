@@ -25,8 +25,8 @@
         data() {
             return {latestDiseaseStats: undefined}
         },
-        mounted() {
-            Vue.axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=10')
+        async mounted() {
+            await Vue.axios.get('https://disease.sh/v3/covid-19/historical/all?lastdays=10')
                 .then((response) => {
                     this.latestDiseaseStats = latestDataAdapter(response.data);
                 })

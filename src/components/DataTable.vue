@@ -66,14 +66,14 @@
                 btnUpdated: undefined
             }
         },
-        mounted() {
+        async mounted() {
             if (localStorage.getItem('allData')) {
                 try {
                     this.list = JSON.parse(localStorage.getItem('allData'));
                 } catch (e) {
                     console.log(e);
                 }
-            } else this.fetchData();
+            } else await this.fetchData();
         },
         methods: {
             fetchData() {
