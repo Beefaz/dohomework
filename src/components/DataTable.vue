@@ -26,7 +26,6 @@
                 </div>
                 <template slot="table-row" slot-scope="props">
             <span v-if="props.column.field === 'country'">
-                <!-- old a :href="'/'+props.formattedRow[props.column.field]">{{props.formattedRow[props.column.field]}}</a --->
                 <label v-on:click="country = props.formattedRow[props.column.field]">{{props.formattedRow[props.column.field]}}</label>
                                 </span>
                 </template>
@@ -74,7 +73,7 @@
                 } catch (e) {
                     console.log(e);
                 }
-            } else this.fetchData();
+            } else async () => await this.fetchData();
         },
         methods: {
             fetchData() {
