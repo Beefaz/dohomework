@@ -66,7 +66,7 @@
                 btnUpdated: undefined
             }
         },
-        created() {
+        mounted() {
             if (localStorage.getItem('allData')) {
                 try {
                     this.list = JSON.parse(localStorage.getItem('allData'));
@@ -76,14 +76,15 @@
             } else this.fetchData();
         },
         methods: {
-            async fetchData() {
-                await Vue.axios.get('https://disease.sh/v3/covid-19/countries')
+            fetchData() {
+                Vue.axios.get('https://disease.sh/v3/covid-19/countries')
                     .then((response) => {
-                        this.btnUpdated = true;
                         this.list = dataTableAdapter(response.data);
-                        localStorage.removeItem('allData');
-                        localStorage.setItem('allData', JSON.stringify(this.list));
-                    })
+                    }).then(()=>{
+                    this.btnUpdated = true;
+                    localStorage.removeItem('allData');
+                    localStorage.setItem('allData', JSON.stringify(this.list));
+                })
                     .catch((error) => {
                         console.warn(error);
                     });

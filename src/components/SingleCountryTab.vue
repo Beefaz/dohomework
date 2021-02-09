@@ -39,8 +39,8 @@
             } else this.fetchData();
         },
         methods: {
-            async fetchData() {
-                await Vue.axios.get('https://disease.sh/v3/covid-19/countries/' + this.country + '?strict=true')
+            fetchData() {
+                Vue.axios.get('https://disease.sh/v3/covid-19/countries/' + this.country + '?strict=true')
                     .then((response) => {
                         this.btnUpdated = true;
                         [this.countryStats, this.countryFlag] = [response.data, response.data['countryInfo']['flag']];
