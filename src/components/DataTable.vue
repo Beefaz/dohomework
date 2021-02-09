@@ -80,7 +80,7 @@
                 Vue.axios.get('https://disease.sh/v3/covid-19/countries')
                     .then((response) => {
                         this.list = dataTableAdapter(response.data);
-                    }).then(()=>{
+                    }).then(() => {
                     this.btnUpdated = true;
                     localStorage.removeItem('allData');
                     localStorage.setItem('allData', JSON.stringify(this.list));
