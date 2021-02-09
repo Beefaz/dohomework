@@ -29,14 +29,14 @@
         data() {
             return {countryStats: undefined, countryFlag: undefined, btnUpdated: undefined}
         },
-        async mounted() {
+        mounted() {
             if (localStorage.getItem(this.country)) {
                 try {
                     [this.countryStats, this.countryFlag] = JSON.parse(localStorage.getItem(this.country));
                 } catch (e) {
                     console.log(e);
                 }
-            } else await this.fetchData();
+            } else this.fetchData();
         },
         methods: {
             fetchData() {
