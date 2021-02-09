@@ -73,11 +73,11 @@
                 } catch (e) {
                     console.log(e);
                 }
-            } else async () => await this.fetchData();
+            } else this.fetchData();
         },
         methods: {
-            fetchData() {
-                Vue.axios.get('https://disease.sh/v3/covid-19/countries')
+            async fetchData() {
+                await Vue.axios.get('https://disease.sh/v3/covid-19/countries')
                     .then((response) => {
                         this.btnUpdated = true;
                         this.list = dataTableAdapter(response.data);
